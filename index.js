@@ -7,10 +7,13 @@ const Drone = require('./Drone');
 main();
 
 async function main() {
+    // Solicitamos que el usuario introduzca el fichero con las instrucciones
     const contents = await getInstructionsFile();
 
+    // Transformamos el texto plano del archivo a las instrucciones que necesitamos ejecutar
     const instructions = parseInstructions(contents);
 
+    // Si el parseo de las instrucciones ha devuelto null, hay un error en las instrucciones
     if (!instructions) {
         console.error('Error: Instrucciones no válidas');
         process.exit();
@@ -19,13 +22,20 @@ async function main() {
     const { area, drones } = instructions;
 
     drones.forEach((droneSpecification) => {
-        const { x, y, orientation } = droneSpecification.position;
-        const position = { x, y };
-        const drone = new Drone(position, orientation);
+        const {
+            movements,
+            position: { x, y, orientation },
+        } = droneSpecification;
+        const drone = new Drone(x, y, orientation);
 
-        executeInstructions(area, drone, droneSpecification.movements);
+        // Procedemos a mover cada uno de los drones según sus especificaciones, y en el área indicada
+        drone.executeInstructions(area, movements);
 
-        console.log(drone.position.x, drone.position.y, drone.orientation);
+        // Mostramos como salida la posición y orientación final de cada drone
+        console.log(drone.x, drone.y, drone.orientation);
+
+        // Enviamos al drone de vuelta a casa
+        drone.returnHome(area);
     });
 }
 
@@ -145,19 +155,6 @@ function parseInstructions(plainInstructions) {
         drones,
     };
 
+    // Devuelve el objeto con las isntrucciones
     return parsedInstructions;
-}
-
-function executeInstructions(area, drone, instructions) {
-    instructions.split('').forEach((movement) => {
-        switch (movement) {
-            case 'L':
-            case 'R':
-                drone.turn(movement);
-                break;
-            case 'M':
-                drone.move(area);
-                break;
-        }
-    });
 }
