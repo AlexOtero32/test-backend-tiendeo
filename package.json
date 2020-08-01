@@ -1,0 +1,12 @@
+{
+    "name": "backend-test",
+    "version": "1.0.0",
+    "description": "Prueba de backend, ejercicio de control de drones",
+    "main": "index.js",
+    "scripts": {
+        "test": "test",
+        "start": "node index.js"
+    },
+    "author": "Alejandro Otero Gómez",
+    "license": "ISC"
+}
