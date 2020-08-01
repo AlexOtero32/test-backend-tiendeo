@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
+const Drone = require('./Drone');
+
 main();
 
 async function main() {
@@ -11,7 +13,20 @@ async function main() {
 
     if (!instructions) {
         console.error('Error: Instrucciones no válidas');
+        process.exit();
     }
+
+    const { area, drones } = instructions;
+
+    drones.forEach((droneSpecification) => {
+        const { x, y, orientation } = droneSpecification.position;
+        const position = { x, y };
+        const drone = new Drone(position, orientation);
+
+        executeInstructions(area, drone, droneSpecification.movements);
+
+        console.log(drone.position.x, drone.position.y, drone.orientation);
+    });
 }
 
 async function getInstructionsFile() {
@@ -121,7 +136,7 @@ function parseInstructions(plainInstructions) {
     for (let i = 1; i < instructionsArray.length; i += 2) {
         drones.push({
             position: instructionsArray[i],
-            instructions: instructionsArray[i + 1],
+            movements: instructionsArray[i + 1],
         });
     }
 
@@ -131,4 +146,18 @@ function parseInstructions(plainInstructions) {
     };
 
     return parsedInstructions;
+}
+
+function executeInstructions(area, drone, instructions) {
+    instructions.split('').forEach((movement) => {
+        switch (movement) {
+            case 'L':
+            case 'R':
+                drone.turn(movement);
+                break;
+            case 'M':
+                drone.move(area);
+                break;
+        }
+    });
 }
