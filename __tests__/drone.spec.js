@@ -1,4 +1,4 @@
-const Drone = require('../Drone');
+const Drone = require('../classes/Drone');
 
 let drone = null;
 

@@ -1,5 +1,5 @@
-const Drone = require('./Drone');
-const InstructionsParser = require('./Instructions');
+const Drone = require('./classes/Drone');
+const InstructionsParser = require('./classes/Instructions');
 
 main();
 
