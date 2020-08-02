@@ -4,9 +4,12 @@
     "description": "Prueba de backend, ejercicio de control de drones",
     "main": "index.js",
     "scripts": {
-        "test": "test",
+        "test": "jest",
         "start": "node index.js"
     },
     "author": "Alejandro Otero Gómez",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "jest": "^26.2.2"
+    }
 }
