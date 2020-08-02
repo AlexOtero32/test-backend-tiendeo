@@ -10,9 +10,6 @@ module.exports = class Instructions {
     }
 
     async getInstructionsFile() {
-        let filename = '',
-            contents = null;
-
         // Solicitamos el nombre del archivo hasta obtener un archivo válido
         try {
             do {
@@ -24,13 +21,11 @@ module.exports = class Instructions {
 
         // Leemos el archivo y devolvemos los datos que contiene
         try {
-            contents = fs.readFileSync(this.filename, 'utf8');
+            this.rawInstructions = fs.readFileSync(this.filename, 'utf8');
         } catch (err) {
             console.error(`Se ha producido un error: ${err.message}`);
             process.exit();
         }
-
-        this.rawInstructions = contents;
     }
 
     async askForFileName() {
