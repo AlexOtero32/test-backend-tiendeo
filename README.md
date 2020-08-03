@@ -21,6 +21,8 @@ A continuación, se procederá a mover los drones según el las instrucciones in
 
 Por último, los drones mostrarán como salida su posición y orientación finales, y acabarán volviendo a su punto de origen.
 
+**Este programa ha sido probado en Ubuntu con Node v12.18.13 y npm v6.14.7**
+
 ## Cómo crear instrucciones
 
 Las instruciones se deberán introducir en un archivo TXT, y tendrán el siguiente formato:
